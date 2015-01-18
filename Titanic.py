@@ -20,10 +20,10 @@ def test(data, first_table, second_table):
 	rank_table = sorted(rank_table)
 	rank_table = rank_table[8:]
 	hand_table = sorted(hand_table)
-	suit_table.extend(rank_table)
-	second_result = list(suit_table)
-	suit_table.extend(hand_table)
-	first_result = suit_table
+
+	first_result = list(suit_table)
+	first_result.extend(rank_table)
+	first_result.extend(hand_table)
 
 	ans = -1
 	check = 0
@@ -33,16 +33,20 @@ def test(data, first_table, second_table):
 			check = 1
 			break
 
-	if check > 1 :
+	if check == 0 :
 		for item in second_table :
-			if item[0] == second_result :
-					ind = item[1].max()
-					ans = item[1].index(ind)
+			if item[0] == suit_table and item[1] == rank_table :
+				ind = item[2].max()
+				ans = item[2].index(ind)
+				check = 1
+				break
+			else if item[1] == rank_table : 
+				ind = item[2].max()
+				ans = item[2].index(ind)
+				check  = 1
 				break
 
-	print ans
-
-	return
+	return ans
 
 csv_file_object = csv.reader(open('train.csv', 'rb'))       # Load in the csv file
 header = csv_file_object.next()                             # Skip the fist line as it is a header
@@ -86,14 +90,31 @@ for i in range(0, num):
 		result_table1.append([first, int(data[i, 10])])
 	
 	index = 0
-
 	for item in result_table2:
 		if item[0] == second:
+			item[1][int(data[i, 10])] += 1
 			index = 1
+			break
+			
 
 	if index == 0:
-		result_table2.append([second, int(data[i, 10])])
+		ans = [0] * 10
+		ans[int(data[i, 10])] = 1
+		result_table2.append([second, ans])
+		
+csv_file_object = csv.reader(open('test2.csv', 'rb'))       # Load in the csv file
+header = csv_file_object.next()                   
+data = []
+
+for row in csv_file_object:                 # Skip through each row in the csv file
+	data.append(row)                        # adding each row to the data variable
+
+output_file = open("output.csv","wb")
+output_file_object = csv.writer(output_file)
+output_file_object.writerow(["id","hand"])
+
+for item in data:
+	ans = test(item[1:],result_table1,result_table2)
+	output_file_object.writerow([int(item[0]), ans])
 
 
-data = ['1','9','2','1','2','2','4','4','2','8']
-test(data,result_table1,result_table2)
