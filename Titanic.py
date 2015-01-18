@@ -29,17 +29,15 @@ for i in range(0, num):
 
 result_table1 = []
 result_table2 = []
-for i in range(0, num):
+#for i in range(0, num):
+for i in range(0, 10):
 	suit_table.sort()
 	hand = list(suit_table[i])
+	suit = list(hand)
 	rank_table.sort()
+	rank = list(rank_table[i,8:])
 	hand.extend(rank_table[i,8:])
 	second = list(hand)
-	#ans = [0] * 11
-	#print ans
-	#ans[int(data[i, 10])] = 1
-	#second.append(ans)
-	#print second
 	hand_table.sort()
 	hand.extend(hand_table[i])
 	first = hand
@@ -54,8 +52,8 @@ for i in range(0, num):
 	
 	index = 0
 	for item in result_table2:
-		if item[0] == second:
-			item[1][int(data[i, 10])] += 1
+		if item[0] == suit and item[1] == rank:
+			item[2][int(data[i, 10])] += 1
 			index = 1
 			break
 			
@@ -63,8 +61,7 @@ for i in range(0, num):
 	if index == 0:
 		ans = [0] * 10
 		ans[int(data[i, 10])] = 1
-		result_table2.append([second, ans])
+		result_table2.append([suit, rank, ans])
 		
-
 for i in result_table2:
-	print i
+	print i[0:]
