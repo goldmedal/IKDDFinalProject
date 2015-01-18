@@ -36,12 +36,12 @@ def test(data, first_table, second_table):
 	if check == 0 :
 		for item in second_table :
 			if item[0] == suit_table and item[1] == rank_table :
-				ind = item[2].max()
+				ind = max(item[2])
 				ans = item[2].index(ind)
 				check = 1
 				break
-			else if item[1] == rank_table : 
-				ind = item[2].max()
+			elif item[1] == rank_table : 
+				ind = max(item[2])
 				ans = item[2].index(ind)
 				check  = 1
 				break
@@ -74,7 +74,9 @@ result_table2 = []
 for i in range(0, num):
 	suit_table.sort()
 	hand = list(suit_table[i])
+	suit = list(hand)
 	rank_table.sort()
+	rank = list(rank_table[i,8:])
 	hand.extend(rank_table[i,8:])
 	second = list(hand)
 	hand_table.sort()
@@ -91,8 +93,8 @@ for i in range(0, num):
 	
 	index = 0
 	for item in result_table2:
-		if item[0] == second:
-			item[1][int(data[i, 10])] += 1
+		if item[0] == suit and item[1] == rank:
+			item[2][int(data[i, 10])] += 1
 			index = 1
 			break
 			
@@ -100,9 +102,9 @@ for i in range(0, num):
 	if index == 0:
 		ans = [0] * 10
 		ans[int(data[i, 10])] = 1
-		result_table2.append([second, ans])
+		result_table2.append([suit, rank, ans])
 		
-csv_file_object = csv.reader(open('test2.csv', 'rb'))       # Load in the csv file
+csv_file_object = csv.reader(open('test.csv', 'rb'))       # Load in the csv file
 header = csv_file_object.next()                   
 data = []
 
