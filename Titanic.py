@@ -33,10 +33,13 @@ for i in range(0, num):
 
 #rank_table2 = rank_table
 #print rank_table2[0:10]
-result_table = np.zeros([2,2,3,4,2,2,2,2,4,13,13,13,13,13,11])
+#result_table = np.zeros([2,2,3,4,2,2,2,2,4,13,13,13,13,13,11])
 #for i in range(0, num):
 for i in range(0, 5):
-	print list(suit_table[i]).append([1,1,1])
+	aaa = list(suit_table[i])
+	aaa.extend([1])
+	print aaa
+	#print list(suit_table[i]).append([1,1,1])
 	hand = list(suit_table[i]).extend(rank_table[i])
 	second = hand
 	print hand
